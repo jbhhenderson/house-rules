@@ -27,7 +27,20 @@ return (
         <>
             <NavbarToggler onClick={toggleNavbar} />
             <Collapse isOpen={open} navbar>
-            <Nav navbar></Nav>
+                <Nav navbar>
+                    {loggedInUser.roles.includes("Admin") && (
+                    <NavItem onClick={() => setOpen(false)}>
+                        <NavLink tag={RRNavLink} to="/userprofiles">
+                        Users
+                        </NavLink>
+                    </NavItem>
+                    )}
+                    <NavItem onClick={() => setOpen(false)}>
+                        <NavLink tag={RRNavLink} to="/chores">
+                        Chores
+                        </NavLink>
+                    </NavItem>
+                </Nav>
             </Collapse>
             <Button
             color="primary"

@@ -22,7 +22,12 @@ public class UserProfileController : ControllerBase
     [Authorize]
     public IActionResult Get()
     {
-        return Ok(_dbContext.UserProfiles.ToList());
+        return Ok(_dbContext.UserProfiles
+        .Include(up => up.ChoreAssignments)
+        .ThenInclude(ca => ca.Chore)
+        .Include(up => up.ChoreCompletions)
+        .ThenInclude(cc => cc.Chore)
+        .ToList());
     }
 
     [HttpGet("{id}")]
@@ -31,6 +36,7 @@ public class UserProfileController : ControllerBase
     {
         UserProfile user = _dbContext
             .UserProfiles
+            .Include(up => up.IdentityUser)
             .Include(up => up.ChoreAssignments)
             .ThenInclude(ca => ca.Chore)
             .Include(up => up.ChoreCompletions)
