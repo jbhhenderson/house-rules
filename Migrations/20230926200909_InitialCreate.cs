@@ -55,7 +55,7 @@ namespace HouseRules.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Difficulty = table.Column<int>(type: "integer", nullable: false),
                     ChoreFrequencyDays = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -247,12 +247,12 @@ namespace HouseRules.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "c3aaeb97-d2ba-4a53-a521-4eea61e59b35", "7c3ebfb5-ebd5-4881-bdfa-d8d28b783039", "Admin", "admin" });
+                values: new object[] { "c3aaeb97-d2ba-4a53-a521-4eea61e59b35", "d2bbdf1a-737c-4006-a47f-1314f2f8f7be", "Admin", "admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f", 0, "57babaf7-4368-4470-94f2-bcbebb0f6cec", "admina@strator.comx", false, false, null, null, null, "AQAAAAEAACcQAAAAEJIo1r5/rpUdRnmGvcBeu2JIy30F9ujjl6v8w20hgJT0LAvPVx5gfJdvrs3ccfZ/Fw==", null, false, "8c435428-95da-46a6-afbe-7a7e35414e0c", false, "Administrator" });
+                values: new object[] { "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f", 0, "2123cd5c-152e-45d2-a2c9-397bcae9c5ea", "admina@strator.comx", false, false, null, null, null, "AQAAAAEAACcQAAAAEJ2O1wztVBmdbRuFHrcLXUEUVb+60bMhGiZb8H6PBaMBQl2g/En0fG04riNhLz2upw==", null, false, "f733251e-a42d-43a0-ba71-4bfbeafded09", false, "Administrator" });
 
             migrationBuilder.InsertData(
                 table: "Chores",

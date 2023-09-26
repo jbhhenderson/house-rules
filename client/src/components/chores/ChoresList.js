@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { deleteChore, getChores } from "../../managers/choreManager";
+import { completeChore, deleteChore, getChores } from "../../managers/choreManager";
 import { Button, Table } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 
@@ -33,6 +33,13 @@ export default function ChoreList ({ loggedInUser }) {
         navigate("/chores/create")
     }
 
+    const handleCompleteButton = (e, choreId) => {
+        e.preventDefault()
+
+        completeChore(choreId, loggedInUser.id)
+        .then(() => getAllChores())
+    }
+
     return (
         <>
         <h2>Chores</h2>
@@ -48,6 +55,7 @@ export default function ChoreList ({ loggedInUser }) {
                         <th>Name</th>
                         <th>{"Difficulty (1-5)"}</th>
                         <th>{"Frequency (days between completions)"}</th>
+                        <th>Complete Chore</th>
                         {loggedInUser.roles.includes("Admin") ? <th>Remove Chore</th> : <></>}
                         {loggedInUser.roles.includes("Admin") ? <th>Chore Details</th> : <></>}
                     </tr>
@@ -55,9 +63,22 @@ export default function ChoreList ({ loggedInUser }) {
                 <tbody>
                     {chores.map((c) => (
                         <tr key={c.id}>
-                            <td>{c.name}</td>
+                            {
+                                c.overdue
+                                ? <td style={{color: 'red'}}>{c.name}</td>
+                                : <td>{c.name}</td>
+                            }
+                            
                             <td>{c.difficulty}</td>
                             <td>{c.choreFrequencyDays}</td>
+                            <td>
+                                <Button
+                                    color="success"
+                                    onClick={(e) => handleCompleteButton(e, c.id)}
+                                >
+                                Complete
+                                </Button>
+                            </td>
                             {loggedInUser.roles.includes("Admin") 
                             ? <td>
                                 <Button 
