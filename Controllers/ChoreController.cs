@@ -23,7 +23,10 @@ public class ChoreController : ControllerBase
     [Authorize]
     public IActionResult Get()
     {
-        return Ok(_dbContext.Chores.ToList());
+        return Ok(_dbContext.Chores
+        .Include(c => c.ChoreAssignments)
+        .Include(c => c.ChoreCompletions)
+        .ToList());
     }
 
     [HttpGet("{id}")]
@@ -45,9 +48,27 @@ public class ChoreController : ControllerBase
 
         return Ok(chore);
     }
+    [HttpGet("my-chores/{userId}")]
+    [Authorize]
+    public IActionResult GetMyChores(int userId)
+    {
+        
+        return Ok(_dbContext
+            // .Chores
+            // .Include(c => c.ChoreAssignments)
+            // .Include(c => c.ChoreCompletions)
+            // .Where(c => c.ChoreAssignments)
+            // // .Select(c => c.ChoreAssignments.Where(ca => ca.UserProfileId == userId))
+            // .ToList()
+            .ChoreAssignments
+            .Include(ca => ca.Chore)
+            .ThenInclude(c => c.ChoreCompletions)
+            .Where(ca => ca.UserProfileId == userId)
+        );
+    }
 
     [HttpPost("{id}/complete")]
-    [Authorize]
+    // [Authorize]
     public IActionResult CompleteChore(int id, int userId)
     {
         Chore foundChore = _dbContext.Chores.SingleOrDefault(c => c.Id == id);
@@ -60,10 +81,12 @@ public class ChoreController : ControllerBase
 
         ChoreCompletion completed = new()
         {
-            UserProfileId = foundChore.Id,
-            ChoreId = foundUser.Id,
-            CompletedOn = DateTime.Now
+            UserProfileId = foundUser.Id,
+            ChoreId = foundChore.Id,
+            CompletedOn = DateTime.Now,
+            UserProfile = foundUser
         };
+
 
         _dbContext.ChoreCompletions.Add(completed);
         _dbContext.SaveChanges();
@@ -75,6 +98,7 @@ public class ChoreController : ControllerBase
     [Authorize(Roles = "Admin")]
     public IActionResult CreateChore(Chore chore)
     {
+        chore.ChoreCompletions = new List<ChoreCompletion>();
         _dbContext.Chores.Add(chore);
         _dbContext.SaveChanges();
         return Created($"/api/chore/{chore.Id}", chore);

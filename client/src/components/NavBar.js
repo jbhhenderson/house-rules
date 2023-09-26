@@ -40,6 +40,11 @@ return (
                         Chores
                         </NavLink>
                     </NavItem>
+                    <NavItem onClick={() => setOpen(false)}>
+                        <NavLink tag={RRNavLink} to="/chores/my-chores">
+                        My Chores
+                        </NavLink>
+                    </NavItem>
                 </Nav>
             </Collapse>
             <Button

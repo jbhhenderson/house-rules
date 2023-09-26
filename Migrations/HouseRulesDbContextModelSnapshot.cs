@@ -38,7 +38,8 @@ namespace HouseRules.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.HasKey("Id");
 
@@ -220,7 +221,7 @@ namespace HouseRules.Migrations
                         new
                         {
                             Id = "c3aaeb97-d2ba-4a53-a521-4eea61e59b35",
-                            ConcurrencyStamp = "7c3ebfb5-ebd5-4881-bdfa-d8d28b783039",
+                            ConcurrencyStamp = "d2bbdf1a-737c-4006-a47f-1314f2f8f7be",
                             Name = "Admin",
                             NormalizedName = "admin"
                         });
@@ -319,13 +320,13 @@ namespace HouseRules.Migrations
                         {
                             Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "57babaf7-4368-4470-94f2-bcbebb0f6cec",
+                            ConcurrencyStamp = "2123cd5c-152e-45d2-a2c9-397bcae9c5ea",
                             Email = "admina@strator.comx",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEJIo1r5/rpUdRnmGvcBeu2JIy30F9ujjl6v8w20hgJT0LAvPVx5gfJdvrs3ccfZ/Fw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJ2O1wztVBmdbRuFHrcLXUEUVb+60bMhGiZb8H6PBaMBQl2g/En0fG04riNhLz2upw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8c435428-95da-46a6-afbe-7a7e35414e0c",
+                            SecurityStamp = "f733251e-a42d-43a0-ba71-4bfbeafded09",
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         });

@@ -7,6 +7,7 @@ export default function CreateChore () {
     const [name, setName] = useState("")
     const [difficulty, setDifficulty] = useState(0)
     const [frequency, setFrequency] = useState(0)
+    const [errors, setErrors] = useState("")
     const navigate = useNavigate()
 
     const handleSubmit = (e) => {
@@ -19,7 +20,13 @@ export default function CreateChore () {
         }
 
         createNewChore(newChore)
-        .then(() => navigate("/chores"))
+        .then((res) => {
+          if (res.errors) {
+            setErrors(res.errors)
+          } else {
+            navigate("/chores")
+          }
+        }) 
     }
 
     return (
@@ -74,6 +81,13 @@ export default function CreateChore () {
                     Submit
                 </Button>
             </Form>
+            <div style={{ color: "red" }}>
+                {Object.keys(errors).map((key) => (
+                    <p key={key}>
+                    {key}: {errors[key].join(",")}
+                    </p>
+                ))}
+            </div>
         </>
     )
 }
